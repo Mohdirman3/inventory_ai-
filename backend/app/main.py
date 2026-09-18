@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from sqlalchemy import text
+from flasgger import Swagger
 
 
 from app.routes.products import products_bp
@@ -18,6 +19,16 @@ logger = logging.getLogger(__name__)
 
 def create_app():
     app = Flask(__name__)
+
+    # Swagger / OpenAPI documentation configuration
+    app.config['SWAGGER'] = {
+        'title': 'Inventory AI REST API',
+        'uiversion': 3,
+        'description': 'Interactive API documentation and playground for Inventory AI',
+        'version': '1.0.0',
+        'specs_route': '/apidocs/'
+    }
+    Swagger(app)
 
     # Allow requests from React dev servers (localhost and 127.0.0.1 on ports 3000 and 5173)
     CORS(
