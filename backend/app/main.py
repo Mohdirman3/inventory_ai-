@@ -3,7 +3,6 @@ from flask_cors import CORS
 from sqlalchemy import text
 from flasgger import Swagger
 
-
 from app.routes.products import products_bp
 from app.routes.suppliers import suppliers_bp
 from app.routes.inventory import inventory_bp
@@ -50,6 +49,7 @@ def create_app():
     app.register_blueprint(purchase_orders_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(analytics_bp)
+
     # Basic health-check endpoint
     @app.route("/", methods=["GET"])
     def home():
@@ -90,3 +90,4 @@ app = create_app()
 
 if __name__ == "__main__":
     app.run(debug=True, port=8001)
+    
