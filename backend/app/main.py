@@ -29,14 +29,15 @@ def create_app():
     }
     Swagger(app)
 
-    # Allow requests from React dev servers (localhost and 127.0.0.1 on ports 3000 and 5173)
+    # Allow requests from React dev servers and Vercel production domains
     CORS(
         app,
         resources={r"/*": {"origins": [
             "http://localhost:3000",
             "http://127.0.0.1:3000",
             "http://localhost:5173",
-            "http://127.0.0.1:5173"
+            "http://127.0.0.1:5173",
+            r"https://.*\.vercel\.app"
         ]}},
         supports_credentials=True
     )

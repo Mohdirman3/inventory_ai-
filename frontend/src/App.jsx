@@ -10,7 +10,7 @@ import Sales from './pages/Sales'
 import Dashboard from './pages/Dashboard'
 import Navbar from './components/Navbar'
 import ProtectedRoute from './components/ProtectedRoute'
-import PurchaseOrders from './pages/purchaseOrders'
+import PurchaseOrders from './pages/PurchaseOrders'
 import { Toaster } from 'react-hot-toast'
 import Profile from './pages/profile'
 
