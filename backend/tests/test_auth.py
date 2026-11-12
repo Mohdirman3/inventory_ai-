@@ -42,22 +42,24 @@ def test_register_missing_fields(client):
     assert data["success"] is False
 
 
-def test_register_invalid_role(client):
-    """Registration with an invalid role should be rejected."""
+def test_register_cannot_assign_admin(client):
+    """Public registration must never create an ADMIN account."""
     response = client.post(
         "/auth/register",
         data=json.dumps({
             "name": "Test User",
-            "email": "test_role_invalid@example.com",
+            "email": "test_role_escalation@example.com",
             "password": "Password123",
-            "role": "SUPERUSER"
+            "role": "ADMIN"
         }),
         content_type="application/json"
     )
-    assert response.status_code == 400
+
+    assert response.status_code == 201
+
     data = response.get_json()
-    assert data["success"] is False
-    assert "role must be ADMIN or EMPLOYEE" in data["message"]
+    assert data["success"] is True
+    assert data["data"]["role"] == "EMPLOYEE"
 
 
 def test_protected_route_without_token(client):

@@ -32,14 +32,15 @@ def register():
         name = data.get('name')
         email = data.get('email')
         password = data.get('password')
-        role = data.get('role', 'EMPLOYEE')
 
         if not name or not email or not password:
-            return jsonify({"success": False, "message": "name, email, and password are required"}), 400
+            return jsonify({
+            "success": False,
+            "message": "name, email, and password are required"
+        }), 400
 
-        if role not in ('ADMIN', 'EMPLOYEE'):
-            return jsonify({"success": False, "message": "role must be ADMIN or EMPLOYEE"}), 400
-
+# Public registration must never accept a user-selected role.
+        role = 'EMPLOYEE'
         existing = db.query(User).filter(User.email == email).first()
         if existing:
             return jsonify({"success": False, "message": "Email already registered"}), 400
